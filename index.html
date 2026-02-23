@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Viewer</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Segoe UI, sans-serif; display: flex; flex-direction: column; height: 100vh; padding: 8px; gap: 8px; }
+    .controls { display: flex; gap: 6px; }
+    input {
+      flex: 1; padding: 6px 10px; border: 1px solid #ccc;
+      border-radius: 4px; font-size: 13px;
+    }
+    button {
+      padding: 6px 14px; background: #0078d4; color: white;
+      border: none; border-radius: 4px; cursor: pointer; font-size: 13px;
+    }
+    button:hover { background: #106ebe; }
+    iframe { flex: 1; border: 1px solid #eee; border-radius: 4px; width: 100%; }
+    .error { color: red; font-size: 12px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <input type="url" id="urlInput" placeholder="https://..." />
+    <button onclick="loadUrl()">Load</button>
+  </div>
+  <span class="error" id="error">Must be a valid https:// URL</span>
+  <iframe id="viewer" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+
+  <script>
+    Office.onReady(() => {});
+
+    function loadUrl() {
+      const url = document.getElementById("urlInput").value.trim();
+      const error = document.getElementById("error");
+
+      if (!url.startsWith("https://")) {
+        error.style.display = "block";
+        return;
+      }
+
+      error.style.display = "none";
+      document.getElementById("viewer").src = url;
+    }
+
+    // Allow pressing Enter to load
+    document.getElementById("urlInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") loadUrl();
+    });
+  </script>
+</body>
+</html>
