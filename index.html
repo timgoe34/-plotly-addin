@@ -23,7 +23,7 @@
 </head>
 <body>
   <div class="controls">
-    <input type="url" id="urlInput" placeholder="https://..." />
+    <input type="url" id="urlInput" placeholder="http://..." />
     <button onclick="loadUrl()">Load</button>
   </div>
   <span class="error" id="error">Must be a valid https:// URL</span>
@@ -35,11 +35,6 @@
     function loadUrl() {
       const url = document.getElementById("urlInput").value.trim();
       const error = document.getElementById("error");
-
-      if (!url.startsWith("https://")) {
-        error.style.display = "block";
-        return;
-      }
 
       error.style.display = "none";
       document.getElementById("viewer").src = url;
